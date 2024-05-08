@@ -1,23 +1,27 @@
-<!doctype html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/email-confirmation-page.css' %}">
+
 </head>
 <body>
-<form action="">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="confirm-code">Confirmation Code</label>
-        <input type="number" id="confirm-code" name="code" required>
-    </div>
-    <button type="submit">Submit</button>
 
-
-</form>
+<div class="container">
+    <h2>Email Confirmation</h2>
+    <p>An email has been sent to your inbox with a confirmation code. Please enter the code below:</p>
+    <form action="{% url 'users:confirm' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="number" class="form-control" id="code" name="code" placeholder="Enter Confirmation Code" required>
+        </div>
+        <button type="submit" class="btn">Confirm Email</button>
+    </form>
+</div>
 
 </body>
 </html>
