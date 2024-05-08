@@ -1,12 +1,13 @@
 import random
 
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from conf.settings import EMAIL_HOST_USER
-from users.forms import RegistrationForm
+from users.forms import RegistrationForm, LoginForm
 from users.models import ConfirmationCodesModel
 
 
@@ -57,11 +58,33 @@ def EmailConfirmationView(request):
         code = request.POST.get('code')
         sent_code = ConfirmationCodesModel.objects.get(code=code)
         if sent_code:
-            user = User.objects.get(email = sent_code.email)
+            user = User.objects.get(email=sent_code.email)
             user.is_active = True
             user.save()
-            return redirect('book:list')
+            return redirect('users:login')
         else:
             return redirect('users:confirm')
     else:
         return render(request, 'email-confirmation-page.html')
+
+
+def LoginView(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("book:list")
+            else:
+                return render(request, 'user-login-page.html')
+
+    else:
+        return render(request, 'user-login-page.html')
+
+
+def LogoutView(request):
+    logout(request)
+    return redirect('book:list')
