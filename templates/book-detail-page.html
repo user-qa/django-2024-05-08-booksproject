@@ -48,6 +48,7 @@
                     <p class="card-text">Info: {{book.info}}</p>
                     <a href="{% url 'book:download' pk=book.id %}" target="_blank" class="btn btn-primary">Download
                         eBook</a>
+                    <a href="{% url 'book:list' %}" class="btn btn-primary">Back</a>
                 </div>
             </div>
             <div class="comments">
