@@ -8,5 +8,5 @@ urlpatterns = [
     path('register/', RegisterUserView, name='register'),
     path('login/', LoginView, name='login'),
     path('confirm/', EmailConfirmationView, name='confirm'),
-path('logout/', LogoutView, name='logout')
+    path('logout/', LogoutView, name='logout')
 ]

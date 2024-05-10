@@ -33,6 +33,7 @@
                        value="{{request.GET.q}}">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+
         </div>
     </div>
 </nav>
@@ -46,9 +47,15 @@
                     <p class="card-text">Author: {{book.author}}</p>
                     <p class="card-text">Pages: {{book.pages}}</p>
                     <p class="card-text">Info: {{book.info}}</p>
+                    <p class="card-text">Added By: {{book.added_by}}</p>
                     <a href="{% url 'book:download' pk=book.id %}" target="_blank" class="btn btn-primary">Download
                         eBook</a>
                     <a href="{% url 'book:list' %}" class="btn btn-primary">Back</a>
+                    {% if request.user.is_authenticated %}
+                    {% if request.user == book.added_by %}
+                    <a href="{% url 'book:delete' pk=book.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
             <div class="comments">

@@ -35,12 +35,20 @@
                    value="{{request.GET.q}}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             {% if request.user.is_authenticated %}
-                        <a href="{% url 'users:logout' %}">
-                <button type="button" class="btn btn-primary">Logout</button>
+            <a href="{% url 'users:logout' %}">
+                <button type="button" class="btn btn-danger">Logout</button>
+            </a>
+            <a href="{% url 'news:list' %}">
+                <button type="button" class="btn btn-info">News</button>
             </a>
             {% else %}
-                        <a href="{% url 'users:login' %}">
+            <a href="{% url 'users:login' %}">
                 <button type="button" class="btn btn-primary">Login</button>
+            </a>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'book:add_book' %}">
+                <button type="button" class="btn btn-success">Add Book</button>
             </a>
             {% endif %}
 
