@@ -55,10 +55,8 @@
                     <p class="card-text">Content: {{news.content}}</p>
                     <p class="card-text">Added By: {{news.added_by}}</p>
                     <a href="{% url 'news:list' %}" class="btn btn-primary">Back</a>
-                    {% if request.user.authenticated %}
-                    {% if request.user == news.added_by%}
+                    {% if request.user.is_authenticated and request.user == news.added_by%}
                     <a href="{% url 'news:delete' pk=news.id %}" class="btn btn-primary">Delete</a>
-                    {% endif %}
                     {% endif %}
                 </div>
             </div>
